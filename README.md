@@ -1,50 +1,83 @@
-# Welcome to your Expo app 👋
+# Pense Bem – O Rei Leão (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo híbrido construído com Expo + React Native para simular o brinquedo **Pense Bem** (TecToy) usando o livro do filme *O Rei Leão*. O app segue o enunciado do PDF fornecido: cinco programas com 30 perguntas cada, teclado colorido (A/B/C/D) e sistema de pontuação baseado em até três tentativas por pergunta.
 
-## Get started
+## Funcionalidades
 
-1. Install dependencies
+- Seleção dos 5 programas (`LIVRO • 1 • 2 • X • ENTER`) com resumo e instruções.
+- Motor de perguntas com 30 itens por programa e gabarito colorido fiel ao livro.
+- Tentativas limitadas em 3 — 3/2/1 ponto(s) conforme o acerto ocorre na 1ª, 2ª ou 3ª tentativa.
+- Painel visual inspirado no Pense Bem original (display digital, tentativas, barra de progresso e pontuação).
+- Botões grandes nas cores oficiais (Vermelho=A, Amarelo=B, Azul=C, Verde=D) com textos embaralhados automaticamente.
+- Tela de resultado com aproveitamento e ações para reiniciar o programa ou voltar ao menu.
 
-   ```bash
-   npm install
-   ```
+> Obs.: As questões 98–103 do Programa 4 não aparecem no trecho do PDF enviado. Para manter o total de 30 perguntas, foram adicionadas perguntas sobre ecossistema tropical no mesmo formato e com gabarito próprio documentado em `src/data/programs.ts`.
 
-2. Start the app
+## Pré-requisitos
 
-   ```bash
-   npx expo start
-   ```
+- Node.js 18+
+- npm (instalado com o Node)
+- Expo CLI (opcional; `npx` já executa os comandos necessários)
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Como executar
 
 ```bash
-npm run reset-project
+# 1. Entre na pasta do projeto
+cd pensebem-app
+
+# 2. Instalar dependências
+npm install
+
+# 3. Iniciar o Metro bundler / Expo
+npm run start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+> **⚠️ IMPORTANTE**: Você precisa estar **dentro da pasta `pensebem-app`** para executar os comandos npm!
 
-## Learn more
+No terminal do Expo escolha uma das opções:
 
-To learn more about developing your project with Expo, look at the following resources:
+- **a** – abrir em um emulador Android
+- **i** – abrir no simulador iOS (necessita macOS)
+- **w** – abrir no navegador (versão web)
+- **Expo Go** – escaneie o QR Code com o aplicativo Expo Go em um dispositivo físico.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Estrutura principal
 
-## Join the community
+```
+pensebem-app/
+├── app/
+│   ├── index.tsx                # Tela inicial com explicação e seleção dos programas
+│   └── program/[programId].tsx  # Tela do jogo com perguntas, botões e resultado
+├── components/
+│   └── ColorButton.tsx          # Botões coloridos A/B/C/D estilizados
+├── src/
+│   ├── data/programs.ts         # Banco com perguntas, respostas e sequências do livro
+│   └── utils/game.ts            # Pontuação por tentativa e montagem de alternativas
+└── README.md
+```
 
-Join our community of developers creating universal apps.
+## Fluxo do jogo
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. O usuário escolhe um programa e vê o painel do Pense Bem.
+2. Cada pergunta mostra o enunciado e quatro botões coloridos.
+3. Ao tocar em um botão:
+   - Acerto na 1ª tentativa → +3 pontos.
+   - Acerto na 2ª tentativa → +2 pontos.
+   - Acerto na 3ª tentativa → +1 ponto.
+   - Três erros → 0 ponto e a pergunta avança automaticamente.
+4. Ao final das 30 perguntas o app mostra a pontuação total e o percentual.
+
+## Referências
+
+- PDF “React Native (Introdução ao React Native)” (trechos fornecidos pelo professor, UniLaSalle).
+- Sites de inspiração enviados pelo usuário (implementações web do Pense Bem) — utilizados apenas como referência visual.
+
+## Próximos passos sugeridos
+
+- Adicionar feedback sonoro/visual extra (Haptics, animações).
+- Persistir o histórico de pontuações em AsyncStorage.
+- Permitir inserir novos livros/programas via arquivo JSON.
+
+---
+
+Feito com ♥ usando Expo + React Native para a disciplina de Aplicativos Híbridos.
