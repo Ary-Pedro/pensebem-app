@@ -67,13 +67,14 @@ export default function HomeScreen() {
           <Text style={styles.kicker}>Projeto React Native • UniLaSalle</Text>
           <Text style={styles.title}>{BOOK_NAME}</Text>
           <Text style={styles.subtitle}>
-            Digite 121, 122, 123, 124 ou 125 para acessar diretamente o programa
-            (o primeiro dígito refere-se ao livro do Rei Leão). Você também pode
-            buscar pelo nome, descrição ou sequência de teclas.
+            Digite 121, 122, 123, 124, 125 ou 126 para acessar diretamente o
+            programa (o primeiro dígito refere-se ao livro do Rei Leão). O
+            programa 126 é uma revisão aleatória dos programas anteriores. Você
+            também pode buscar pelo nome, descrição ou sequência de teclas.
           </Text>
           <View style={styles.searchWrapper}>
             <TextInput
-              placeholder="Buscar por código (121…125), nome ou sequência"
+              placeholder="Buscar por código (121…126), nome ou sequência"
               placeholderTextColor="rgba(255,255,255,0.7)"
               value={query}
               onChangeText={text => {

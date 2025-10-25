@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -12,7 +12,12 @@ import {
 } from 'react-native';
 
 import { ColorButton } from '../../components/ColorButton';
-import { COLOR_BUTTONS, ColorKey, PROGRAMS } from '../../src/data/programs';
+import {
+  COLOR_BUTTONS,
+  ColorKey,
+  PROGRAMS,
+  regenerateProgram6,
+} from '../../src/data/programs';
 import {
   TOTAL_ATTEMPTS,
   buildOptions,
@@ -39,6 +44,13 @@ export default function ProgramScreen() {
   const program = PROGRAMS.find(
     item => item.id === Number(programId ?? NaN),
   );
+
+  // Regenera as perguntas do Programa 6 quando entrar nele
+  useEffect(() => {
+    if (program && program.id === 6) {
+      regenerateProgram6();
+    }
+  }, [program?.id]);
 
   const totalQuestions = program?.questions.length ?? 0;
   const [currentIndex, setCurrentIndex] = useState(0);

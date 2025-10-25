@@ -853,6 +853,50 @@ const program5Questions = createQuestions(
   121,
 );
 
+// Função auxiliar para embaralhar array (Fisher-Yates shuffle)
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+// Função para gerar o Programa 6 com perguntas aleatórias dos programas anteriores
+const generateProgram6Questions = (): Question[] => {
+  const allQuestions: Question[] = [
+    ...program1Questions,
+    ...program2Questions,
+    ...program3Questions,
+    ...program4Questions,
+    ...program5Questions,
+  ];
+
+  // Embaralha todas as perguntas e pega as primeiras 30
+  const shuffled = shuffleArray(allQuestions);
+  return shuffled.slice(0, 30);
+};
+
+// Programa 6 - Revisão Aleatória
+const program6: Program = {
+  id: 6,
+  code: '126',
+  title: 'Programa 6 - Revisão Aleatória',
+  description:
+    'Este programa é uma revisão. Serão seis questões de cada um dos programas anteriores escolhidas ao acaso. Para entrar neste programa, pressione as teclas de seu equipamento na ordem indicada abaixo.',
+  bookSequence: 'LIVRO • 1 • 2 • 6 • ENTER',
+  questions: generateProgram6Questions(),
+};
+
+// Função para regenerar as perguntas do Programa 6
+export const regenerateProgram6 = (): void => {
+  const program = PROGRAMS.find(p => p.id === 6);
+  if (program) {
+    program.questions = generateProgram6Questions();
+  }
+};
+
 export const PROGRAMS: Program[] = [
   {
     id: 1,
@@ -899,6 +943,7 @@ export const PROGRAMS: Program[] = [
     bookSequence: 'LIVRO • 1 • 2 • 5 • ENTER',
     questions: program5Questions,
   },
+  program6,
 ];
 
 export const BOOK_NAME = 'Pense Bem - O Rei Leão';
