@@ -1,0 +1,12 @@
+# Ignorar arquivos TypeScript e pastas não necessárias para a versão standalone do Snack
+app/
+components/
+hooks/
+constants/
+src/
+scripts/
+*.tsx
+*.ts
+!*.d.ts
+tsconfig.json
+eslint.config.js
