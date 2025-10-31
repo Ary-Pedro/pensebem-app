@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Link, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import {
+  Linking,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -67,14 +68,13 @@ export default function HomeScreen() {
           <Text style={styles.kicker}>Projeto React Native • UniLaSalle</Text>
           <Text style={styles.title}>{BOOK_NAME}</Text>
           <Text style={styles.subtitle}>
-            Digite 121, 122, 123, 124, 125 ou 126 para acessar diretamente o
-            programa (o primeiro dígito refere-se ao livro do Rei Leão). O
-            programa 126 é uma revisão aleatória dos programas anteriores. Você
-            também pode buscar pelo nome, descrição ou sequência de teclas.
+            Digite 121, 122, 123, 124 ou 125 para acessar diretamente o programa
+            (o primeiro número corresponde ao livro do Rei Leão). Também é possível
+            buscar pelo nome, descrição ou sequência de teclas.
           </Text>
           <View style={styles.searchWrapper}>
             <TextInput
-              placeholder="Buscar por código (121…126), nome ou sequência"
+              placeholder="Buscar por código (121…125), nome ou sequência"
               placeholderTextColor="rgba(255,255,255,0.7)"
               value={query}
               onChangeText={text => {
@@ -97,17 +97,24 @@ export default function HomeScreen() {
           <View style={styles.infoCard}>
             <Text style={styles.infoTitle}>Regras principais</Text>
             <Text style={styles.infoText}>
-              • 30 perguntas por programa{'\n'}• 3 tentativas por pergunta{'\n'}•
-              3 / 2 / 1 pontos conforme a tentativa{'\n'}• Sem pontos após a 3ª
-              tentativa
+              {'- 30 perguntas por programa\n- 3 tentativas por pergunta\n- 3 / 2 / 1 pontos conforme a tentativa\n- Sem pontos após a 3ª tentativa'}
             </Text>
           </View>
           <View style={styles.infoCard}>
             <Text style={styles.infoTitle}>Sequência das teclas</Text>
             <Text style={styles.infoText}>
-              Pressione LIVRO {'>'} 1 {'>'} 2 {'>'} PROGRAMA {'>'} ENTER, como no
-              Pense Bem original.
+              {'No equipamento original: LIVRO > 1 > 2 > PROGRAMA > ENTER.\nPara uma experiência fiel, mantenha o livro por perto — algumas pistas visuais só aparecem nele.'}
             </Text>
+            <Pressable
+              style={styles.linkButton}
+              onPress={() =>
+                Linking.openURL(
+                  'https://datassette.s3.us-west-004.backblazeb2.com/livros/pense_bem_-_disney_-_o_rei_leao.pdf',
+                )
+              }
+            >
+              <Text style={styles.linkButtonText}>Abrir livro digital</Text>
+            </Pressable>
           </View>
         </View>
 
@@ -117,8 +124,7 @@ export default function HomeScreen() {
             <View style={styles.emptyState}>
               <Text style={styles.emptyTitle}>Nada encontrado</Text>
               <Text style={styles.emptySubtitle}>
-                Ajuste os termos ou limpe o campo de busca para ver todos os
-                programas.
+                Ajuste os termos ou limpe o campo de busca para ver todos os programas.
               </Text>
             </View>
           ) : (
@@ -183,8 +189,9 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    lineHeight: 22,
-    color: 'rgba(255,255,255,0.88)',
+    lineHeight: 24,
+    letterSpacing: 0.4,
+    color: 'rgba(255,255,255,0.9)',
     marginBottom: 16,
   },
   searchWrapper: {
@@ -226,8 +233,25 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 14,
-    color: 'rgba(255,255,255,0.8)',
-    lineHeight: 20,
+    color: 'rgba(255,255,255,0.85)',
+    lineHeight: 22,
+    marginBottom: 12,
+  },
+  linkButton: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.6)',
+    backgroundColor: 'rgba(15,23,42,0.6)',
+  },
+  linkButtonText: {
+    color: '#e0f2fe',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
   },
   section: {
     gap: 12,

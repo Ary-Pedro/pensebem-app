@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -12,45 +12,23 @@ import {
 } from 'react-native';
 
 import { ColorButton } from '../../components/ColorButton';
-import {
-  COLOR_BUTTONS,
-  ColorKey,
-  PROGRAMS,
-  regenerateProgram6,
-} from '../../src/data/programs';
-import {
-  TOTAL_ATTEMPTS,
-  buildOptions,
-  pointsForAttempt,
-} from '../../src/utils/game';
+import { COLOR_BUTTONS, ColorKey, getProgramById } from '../../src/data/programs';
+import type { Program } from '../../src/data/programs';
+import { TOTAL_ATTEMPTS, pointsForAttempt } from '../../src/utils/game';
 
-const EMPTY_OPTIONS: Record<ColorKey, string> = {
-  red: '',
-  yellow: '',
-  blue: '',
-  green: '',
-};
-
-const colorOrder: ColorKey[] = ['red', 'yellow', 'blue', 'green'];
+const COLOR_ORDER: ColorKey[] = ['red', 'yellow', 'blue', 'green'];
 
 export default function ProgramScreen() {
   const router = useRouter();
-  const { width } = useWindowDimensions();
   const { programId } = useLocalSearchParams<{ programId: string }>();
-
+  const { width } = useWindowDimensions();
   const isWide = width >= 768;
   const buttonColumns = isWide ? 4 : 2;
+  const scrollRef = useRef<ScrollView>(null);
 
-  const program = PROGRAMS.find(
-    item => item.id === Number(programId ?? NaN),
+  const [program, setProgram] = useState<Program | null>(() =>
+    getProgramById(Number(programId ?? NaN)),
   );
-
-  // Regenera as perguntas do Programa 6 quando entrar nele
-  useEffect(() => {
-    if (program && program.id === 6) {
-      regenerateProgram6();
-    }
-  }, [program?.id]);
 
   const totalQuestions = program?.questions.length ?? 0;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,12 +43,31 @@ export default function ProgramScreen() {
   const [finished, setFinished] = useState(false);
   const [lastAnswerLetter, setLastAnswerLetter] = useState('');
 
-  const optionMap = useMemo(
-    () => (program ? buildOptions(program, currentIndex) : EMPTY_OPTIONS),
-    [program, currentIndex],
-  );
+  const question = program?.questions[currentIndex];
 
-  if (!program) {
+  const orderedOptions = useMemo(() => {
+    const options = question?.options ?? [];
+    return COLOR_ORDER.map(color => {
+      const option = options.find(opt => opt.color === color);
+      if (option) {
+        return option;
+      }
+      return { color, text: '', isCorrect: false };
+    });
+  }, [question]);
+
+  useEffect(() => {
+    setLastAnswerLetter('');
+    setSelectedColor(null);
+  }, [currentIndex, program?.id]);
+
+  useEffect(() => {
+    if (pendingAdvance) {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }
+  }, [pendingAdvance]);
+
+  if (!program || !question) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <LinearGradient
@@ -87,7 +84,6 @@ export default function ProgramScreen() {
     );
   }
 
-  const question = program.questions[currentIndex];
   const maxScore = totalQuestions * 3;
   const progress =
     totalQuestions === 0
@@ -96,19 +92,28 @@ export default function ProgramScreen() {
           1,
           (currentIndex + (pendingAdvance ? 1 : 0)) / totalQuestions,
         );
+
   const containerStyles = [
     styles.container,
     isWide ? styles.containerWide : null,
   ];
 
   const handleSelect = (color: ColorKey) => {
-    if (pendingAdvance || finished) return;
+    if (pendingAdvance || finished) {
+      return;
+    }
+
+    const selectedOption = question.options.find(
+      option => option.color === color,
+    );
+    if (!selectedOption) {
+      return;
+    }
 
     setSelectedColor(color);
     setLastAnswerLetter(COLOR_BUTTONS[color].letter);
-    const isCorrect = color === question.correctColor;
 
-    if (isCorrect) {
+    if (selectedOption.isCorrect) {
       const earned = pointsForAttempt(attempt);
       setScore(prev => prev + earned);
       setStatusMessage(
@@ -134,13 +139,11 @@ export default function ProgramScreen() {
       return;
     }
 
-    setLastAnswerLetter('');
-    setSelectedColor(null);
+    setCurrentIndex(prev => prev + 1);
+    setAttempt(1);
+    setPendingAdvance(false);
     setFeedback(null);
     setStatusMessage('');
-    setPendingAdvance(false);
-    setAttempt(1);
-    setCurrentIndex(prev => prev + 1);
   };
 
   const resetGame = () => {
@@ -153,6 +156,10 @@ export default function ProgramScreen() {
     setSelectedColor(null);
     setFinished(false);
     setLastAnswerLetter('');
+    if (program.id === 6) {
+      setProgram(getProgramById(6));
+    }
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
   };
 
   const renderSummary = () => (
@@ -166,8 +173,8 @@ export default function ProgramScreen() {
           Aproveitamento de {Math.round((score / maxScore) * 100)}%.
         </Text>
         <Text style={styles.summaryNote}>
-          Cada pergunta vale até 3 pontos, respeitando as 3 tentativas do Pense
-          Bem.
+          Cada pergunta vale até 3 pontos, respeitando as três tentativas do
+          Pense Bem.
         </Text>
 
         <Pressable style={styles.primaryButton} onPress={resetGame}>
@@ -203,14 +210,12 @@ export default function ProgramScreen() {
         colors={['#0f2027', '#203a43', '#2c5364']}
         style={StyleSheet.absoluteFillObject}
       />
-      <ScrollView contentContainerStyle={containerStyles}>
+      <ScrollView ref={scrollRef} contentContainerStyle={containerStyles}>
         <View style={[styles.machine, isWide && styles.machineWide]}>
           <Text style={styles.logo}>Tectoy</Text>
           <View style={styles.display}>
             <Text style={styles.displayText}>
-              {`${program.code} -> ${currentIndex + 1}:${
-                lastAnswerLetter || ''
-              }`}
+              {`${program.code} -> ${currentIndex + 1}:${lastAnswerLetter || ' '}`}
             </Text>
           </View>
           <Text style={styles.sequence}>{program.bookSequence}</Text>
@@ -232,7 +237,7 @@ export default function ProgramScreen() {
             <Text style={styles.stat}>
               Pergunta {currentIndex + 1}/{totalQuestions}
             </Text>
-            <Text style={styles.stat}>Livro: {program.title}</Text>
+            <Text style={styles.stat}>Programa: {program.title}</Text>
           </View>
         </View>
 
@@ -244,23 +249,23 @@ export default function ProgramScreen() {
         </View>
 
         <View style={[styles.grid, isWide && styles.gridWide]}>
-          {colorOrder.map(color => {
+          {orderedOptions.map(option => {
             const highlight = pendingAdvance
-              ? color === question.correctColor
+              ? option.isCorrect
                 ? 'correct'
-                : selectedColor === color
+                : selectedColor === option.color
                   ? 'incorrect'
                   : null
-              : selectedColor === color
+              : selectedColor === option.color
                 ? 'selected'
                 : null;
 
             return (
               <ColorButton
-                key={color}
-                color={color}
-                onPress={() => handleSelect(color)}
-                optionText={optionMap[color]}
+                key={option.color}
+                color={option.color}
+                onPress={() => handleSelect(option.color)}
+                optionText={option.text}
                 disabled={pendingAdvance}
                 highlight={highlight}
                 columns={buttonColumns}
@@ -294,7 +299,7 @@ export default function ProgramScreen() {
         ) : null}
 
         <Pressable
-          style={[styles.primaryButton, styles.secondaryButton]}
+          style={[styles.primaryButton, styles.secondaryButton, styles.restartButton]}
           onPress={resetGame}
         >
           <Text style={[styles.primaryButtonText, styles.secondaryButtonText]}>
@@ -468,6 +473,10 @@ const styles = StyleSheet.create({
   },
   secondaryButtonText: {
     color: '#fff',
+  },
+  restartButton: {
+    marginTop: 24,
+    backgroundColor: '#2d3436',
   },
   centered: {
     flex: 1,
