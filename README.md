@@ -29,7 +29,7 @@ cd pensebem-app
 npm install
 
 # 3. Iniciar o Metro bundler / Expo
-npm run start
+npm run start -- --tunnel
 ```
 
 > **⚠️ IMPORTANTE**: Você precisa estar **dentro da pasta `pensebem-app`** para executar os comandos npm!
