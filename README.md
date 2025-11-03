@@ -69,15 +69,8 @@ pensebem-app/
 
 ## Referências
 
-- PDF “React Native (Introdução ao React Native)” (trechos fornecidos pelo professor, UniLaSalle).
+- PDF “React Native (Introdução ao React Native)” (trechos fornecidos pelo professor JOTA PÊ, UniLaSalle).
 - Sites de inspiração enviados pelo usuário (implementações web do Pense Bem) — utilizados apenas como referência visual.
-
-## Próximos passos sugeridos
-
-- Adicionar feedback sonoro/visual extra (Haptics, animações).
-- Persistir o histórico de pontuações em AsyncStorage.
-- Permitir inserir novos livros/programas via arquivo JSON.
-
 ---
 
 Feito com ♥ usando Expo + React Native para a disciplina de Aplicativos Híbridos.
