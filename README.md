@@ -11,13 +11,12 @@ Aplicativo híbrido construído com Expo + React Native para simular o brinquedo
 - Botões grandes nas cores oficiais (Vermelho=A, Amarelo=B, Azul=C, Verde=D) com textos embaralhados automaticamente.
 - Tela de resultado com aproveitamento e ações para reiniciar o programa ou voltar ao menu.
 
-> Obs.: As questões 98–103 do Programa 4 não aparecem no trecho do PDF enviado. Para manter o total de 30 perguntas, foram adicionadas perguntas sobre ecossistema tropical no mesmo formato e com gabarito próprio documentado em `src/data/programs.ts`.
 
 ## Pré-requisitos
 
 - Node.js 18+
 - npm (instalado com o Node)
-- Expo CLI (opcional; `npx` já executa os comandos necessários)
+- Expo CLI (opcional; V54.0.0
 
 ## Como executar
 
@@ -69,8 +68,9 @@ pensebem-app/
 
 ## Referências
 
-- PDF “React Native (Introdução ao React Native)” (trechos fornecidos pelo professor JOTA PÊ, UniLaSalle).
-- Sites de inspiração enviados pelo usuário (implementações web do Pense Bem) — utilizados apenas como referência visual.
+- Projeto fornecidos pelo professor JOTA PÊ (JOÃO PAULO BAPTISTA VOIGTLAENDER), UniLaSalle.
+- Projeto Pense Bem (TecToy)
+  
 ---
 
-Feito com ♥ usando Expo + React Native para a disciplina de Aplicativos Híbridos.
+Feito com ♥ usando Expo + React Native para a disciplina de DESENVOLVIMENTO MOBILE.
