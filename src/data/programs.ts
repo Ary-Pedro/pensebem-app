@@ -282,7 +282,7 @@ const program1: Program = {
     },
     {
       id: 20,
-      prompt: 'Por ali passam também os javalis, que vivem nas ___.',
+      prompt: 'Por ali passam também os javalis, que vivem em ___.',
       options: [
         { color: 'red', text: 'ninhos', isCorrect: false },
         { color: 'yellow', text: 'casas', isCorrect: false },
