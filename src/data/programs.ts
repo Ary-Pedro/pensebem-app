@@ -417,7 +417,7 @@ const program2: Program = {
         { color: 'red', text: 'vegetal', isCorrect: false },
         { color: 'yellow', text: 'monárquico', isCorrect: false },
         { color: 'blue', text: 'animal', isCorrect: true },
-        { color: 'green', text: 'subreino', isCorrect: false },
+        { color: 'green', text: 'submarino', isCorrect: false },
       ],
     },
     {
@@ -427,7 +427,7 @@ const program2: Program = {
         { color: 'red', text: 'invertebrado', isCorrect: false },
         { color: 'yellow', text: 'molusco', isCorrect: false },
         { color: 'blue', text: 'vertebrado', isCorrect: true },
-        { color: 'green', text: 'mamífero', isCorrect: false },
+        { color: 'green', text: 'anfíbeo', isCorrect: false },
       ],
     },
     {
