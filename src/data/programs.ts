@@ -957,8 +957,8 @@ const program3: Program = {
       id: 81,
       prompt: 'Complete o quebra-cabeça com as peças correspondentes.',
       options: [
-        { color: 'red', text: 'D', isCorrect: true },
-        { color: 'yellow', text: 'B', isCorrect: false },
+        { color: 'red', text: 'D', isCorrect: false },
+        { color: 'yellow', text: 'B', isCorrect: true },
         { color: 'blue', text: 'F', isCorrect: false },
         { color: 'green', text: 'A', isCorrect: false },
       ],
@@ -977,18 +977,18 @@ const program3: Program = {
       id: 83,
       prompt: 'Complete o quebra-cabeça com as peças correspondentes.',
       options: [
-        { color: 'red', text: 'A', isCorrect: true },
+        { color: 'red', text: 'A', isCorrect: false },
         { color: 'yellow', text: 'B', isCorrect: false },
         { color: 'blue', text: 'F', isCorrect: false },
-        { color: 'green', text: 'C', isCorrect: false },
+        { color: 'green', text: 'C', isCorrect: true },
       ],
     },
     {
       id: 84,
       prompt: 'Complete o quebra-cabeça com as peças correspondentes.',
       options: [
-        { color: 'red', text: 'B', isCorrect: true },
-        { color: 'yellow', text: 'F', isCorrect: false },
+        { color: 'red', text: 'B', isCorrect: false },
+        { color: 'yellow', text: 'F', isCorrect: true },
         { color: 'blue', text: 'D', isCorrect: false },
         { color: 'green', text: 'E', isCorrect: false },
       ],
@@ -997,8 +997,8 @@ const program3: Program = {
       id: 85,
       prompt: 'Complete o quebra-cabeça com as peças correspondentes.',
       options: [
-        { color: 'red', text: 'C', isCorrect: true },
-        { color: 'yellow', text: 'D', isCorrect: false },
+        { color: 'red', text: 'C', isCorrect: false },
+        { color: 'yellow', text: 'D', isCorrect: true },
         { color: 'blue', text: 'F', isCorrect: false },
         { color: 'green', text: 'A', isCorrect: false },
       ],
@@ -1007,10 +1007,10 @@ const program3: Program = {
       id: 86,
       prompt: 'Complete o quebra-cabeça com as peças correspondentes.',
       options: [
-        { color: 'red', text: 'D', isCorrect: true },
+        { color: 'red', text: 'D', isCorrect: false },
         { color: 'yellow', text: 'E', isCorrect: false },
         { color: 'blue', text: 'C', isCorrect: false },
-        { color: 'green', text: 'A', isCorrect: false },
+        { color: 'green', text: 'A', isCorrect: true },
       ],
     },
     {
