@@ -1420,8 +1420,8 @@ const program5: Program = {
         'Indique a palavra correta para cada uma das partes numeradas de Pumbaa.',
       options: [
         { color: 'red', text: 'antena', isCorrect: false },
-        { color: 'yellow', text: 'olhos', isCorrect: false },
-        { color: 'blue', text: 'bico', isCorrect: true },
+        { color: 'yellow', text: 'olhos', isCorrect: true },
+        { color: 'blue', text: 'bico', isCorrect: false },
         { color: 'green', text: 'patas', isCorrect: false },
       ],
     },
@@ -1564,9 +1564,9 @@ const program5: Program = {
       id: 137,
       prompt: 'Descubra o oposto ou contrário da palavra – SOL.',
       options: [
-        { color: 'red', text: 'estrela', isCorrect: true },
+        { color: 'red', text: 'estrela', isCorrect: false },
         { color: 'yellow', text: 'mar', isCorrect: false },
-        { color: 'blue', text: 'chuva', isCorrect: false },
+        { color: 'blue', text: 'chuva', isCorrect: true },
         { color: 'green', text: 'montanha', isCorrect: false },
       ],
     },
