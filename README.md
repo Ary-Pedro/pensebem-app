@@ -1,3 +1,4 @@
+**Integrantes**: Stefany Matos, Laize dos Santos, Pedro Cezar e Pedro Vinicius
 # Pense Bem – O Rei Leão (React Native)
 
 Aplicativo híbrido construído com Expo + React Native para simular o brinquedo **Pense Bem** (TecToy) usando o livro do filme *O Rei Leão*. O app segue o enunciado do PDF fornecido: cinco programas com 30 perguntas cada, teclado colorido (A/B/C/D) e sistema de pontuação baseado em até três tentativas por pergunta.
